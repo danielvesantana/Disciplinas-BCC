@@ -1,0 +1,14 @@
+computer: tietokone
+tietokone: computer
+monkey: apina
+alla oleva: below
+below: alla oleva
+apina: monkey
+olut: beer
+beer: olut
+computer: tietokone
+monkey: apina
+tietokone: computer
+apina: monkey
+olut: beer
+beer: olut
