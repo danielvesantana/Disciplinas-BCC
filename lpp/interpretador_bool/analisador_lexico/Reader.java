@@ -31,11 +31,17 @@ public class Reader{
         }
     }
 
-    public void remove_white_space(){
-        Pattern p = Pattern.compile("\s*([^\s]*)\s*");
+    public List<String> getLexemas(){
+        Pattern p = Pattern.compile("([^\\s]+)");
         Matcher m;
         for(String line : lines){
             m = p.matcher(line);
+
+            while(m.find()){
+                lexemas.add(m.group());
+            }
         }
+
+        return lexemas;
     }
 }

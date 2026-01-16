@@ -1,6 +1,7 @@
 package main;
 
 import analisador_lexico.Reader;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args){
@@ -8,6 +9,8 @@ public class Main {
         String path = "/home/daniel-alves/gitiznho/Disciplinas-BCC/lpp/interpretador_bool/codigo.bool";
 
         reader.read_file(path);
-        reader.remove_white_space();
+        List<String> lexemas = reader.getLexemas();
+
+        
     }
 }
