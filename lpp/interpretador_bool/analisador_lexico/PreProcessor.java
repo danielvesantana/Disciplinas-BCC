@@ -6,16 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Reader{
+public class PreProcessor{
     private List<String> lines;
-    private List<String> lexemas;
+    private List<String> linePreProcessed;
 
-    public Reader(){
+    public PreProcessor(){
         lines = new LinkedList<>();
-        lexemas = new LinkedList<>();
+        linePreProcessed = new LinkedList<>();
     }
 
     public void read_file(String path){
@@ -31,17 +29,15 @@ public class Reader{
         }
     }
 
-    public List<String> getLexemas(){
-        Pattern p = Pattern.compile("([^\\s]+)");
-        Matcher m;
+    public List<String> removeWhiteSpaces(){
+        String str;
         for(String line : lines){
-            m = p.matcher(line);
+            if(line.isEmpty()){continue;}
+            str = line.replaceAll("[\\s]{2,}", "");
 
-            while(m.find()){
-                lexemas.add(m.group());
-            }
+            linePreProcessed.add(str);
         }
 
-        return lexemas;
+        return linePreProcessed;
     }
 }

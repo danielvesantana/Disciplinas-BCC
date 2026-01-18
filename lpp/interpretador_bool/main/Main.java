@@ -1,15 +1,15 @@
 package main;
 
-import analisador_lexico.Reader;
+import analisador_lexico.PreProcessor;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args){
-        Reader reader = new Reader();
+        PreProcessor reader = new PreProcessor();
         String path = "/home/daniel-alves/gitiznho/Disciplinas-BCC/lpp/interpretador_bool/codigo.bool";
 
         reader.read_file(path);
-        List<String> lexemas = reader.getLexemas();
+        List<String> lines = reader.removeWhiteSpaces();
 
         
     }
