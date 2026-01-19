@@ -1,0 +1,87 @@
+<program> → <main-body>
+            | <class-defs> <main-body>
+
+<class-defs> | <class-def>
+             | <class-def> <class-defs>
+
+<class-def> → class <name> ‘\n’ <attrs-def> <methods-def> end-class ‘\n’
+            | class <name> ‘\n’ <attrs-def> end-class ‘\n’
+            | class <name> ‘\n’ <methods-def> end-class ‘\n’
+
+<attrs-def> → vars <name-list> ‘\n’
+
+<name-list> → <name>
+            | <name>, <name-list>
+
+<methods-def> → <method-def>
+              | <method-def> <method-defs>
+
+<method-def> → <method-header> <vars-def> <method-body>
+             | <method-header> <method-body>
+
+<method-header> → method <name> () ‘\n’
+                | method <name> ( <name-list>) ‘\n’
+
+<vars-def> → <attrs-def>
+
+<method-body> → begin ‘\n’ <body-stmts> end-method ‘\n’
+
+<body-stmts> → <body-stmt>
+             | <body-stmt> <body-stmts>
+
+<body-stmt> → <prototype>
+            | <attr>
+            | <if>
+            | <method-call>
+            | return <name>
+
+<prototype> → <name>._prototype = <name>
+
+<attr> → <lhs> = <arg> ‘\n’
+        | <lhs> = <arg-bin> <op> <arg-bin> ‘\n’
+
+<op> → + | - | * | /
+
+<lhs> → <name>
+        | <name>.<name>
+
+<arg> → <number>
+        | <name>
+        | <name>.<name>
+        | <method-call>
+        | <obj-creation>
+
+<arg-bin> → <name>
+
+<obj-creation> → new <name> ‘\n’
+
+<method-call> → <name>.<name> () ‘\n’
+              | <name>.<name> ( <name-list> ) ‘\n’
+
+<if> → if <name> <cmp> <name> then ‘\n’ <if-stmts> end-if ‘\n’
+     | if <name> <cmp> <name> then ‘\n’ <if-stmts> else ‘\n’ <if-stmts> end-if ‘\n’
+
+<cmp> → eq | ne | gt | ge | lt | le
+
+<if-stmts> → <if-stmt>
+    | <if-stmt> <if-stmts>
+
+<if-stmt> → <prototype>
+    | <attr>
+    | <method-call>
+    | return <name>
+
+<main-body> → begin ‘\n’ <vars-def> <main-stmts> end ‘\n’
+            | begin ‘\n’ <main-stmts> end ‘\n’
+
+<main-stmts> → <main-stmt>
+            | <main-stmt> <main-stmts>
+
+<main-stmt> → <prototype>
+            | <attr>
+            | <if>
+            | <method-call>
+
+<name> → sequência de letras maiúsculas ou minúsculas (sem números ou caracteres especiais)
+
+<number> → número inteiro 32-bits (positivo/negativo)

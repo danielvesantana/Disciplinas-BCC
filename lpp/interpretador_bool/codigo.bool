@@ -5,7 +5,7 @@ class Base
     vars x
     begin
         self.id = 10
-        x = self.id
+        x = self.id(a)
         io.print(x)
         x = 0
         return x
