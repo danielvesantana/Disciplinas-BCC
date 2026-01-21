@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PreProcessor{
-    private List<String> lines;
-    private List<String> linePreProcessed;
+    private final List<String> lines;
+    private final List<String> linePreProcessed;
 
     public PreProcessor(){
         lines = new LinkedList<>();
