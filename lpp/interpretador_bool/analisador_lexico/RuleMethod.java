@@ -87,79 +87,245 @@ public class RuleMethod{
     }
 
     public String varEqVarOpeVar(Pair<String, String> pm){
-        
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(2) + "\n";
+        newInst += "load " + matches.get(4) + "\n";
+
+        switch (matches.get(3)) {
+            case "+":
+                newInst += "add" + "\n";
+                break;
+            case "-":
+                newInst += "sub" + "\n";
+                break;
+            case "*":
+                newInst += "mul" + "\n";
+                break;
+            case "/":
+                newInst += "div" + "\n";
+                break;
+            default:
+                break;
+        }
+        newInst += "store " + matches.get(1) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqNum(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "const " + matches.get(3) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqVar(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqObjAtr(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "get " + matches.get(4) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqObjMet(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "call " + matches.get(4) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqObjMetAtr(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        for(int i = 5; i < matches.size(); i++){
+            newInst += "load " + matches.get(i) + "\n";
+        }
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "call " + matches.get(4) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objAtrEqNewObj(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "new " + matches.get(3) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n"; 
+
+        return newInst;
     }
 
     public String objAtrEqVarOpeVar(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "load " + matches.get(5) + "\n";
+
+        switch (matches.get(4)) {
+            case "+":
+                newInst += "add" + "\n";
+                break;
+            case "-":
+                newInst += "sub" + "\n";
+                break;
+            case "*":
+                newInst += "mul" + "\n";
+                break;
+            case "/":
+                newInst += "div" + "\n";
+                break;
+            default:
+                break;
+        }
+
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String ifVarOpeVarThen(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "load " + matches.get(3) + "\n";
+        
+        switch(matches.get(2)){
+            case "eq":
+                newInst += "eq";
+                break;
+            case "ne":
+                newInst += "ne";
+                break;
+            case "gt":
+                newInst += "gt";
+                break;
+            case "ge":
+                newInst += "ge";
+                break;
+            case "lt":
+                newInst += "lt";
+                break;
+            case "le":
+                newInst += "le";
+                break;
+            default:
+                break;
+        }
+        newInst += "if <n>" + "\n";
+
+        return newInst;
     }
 
     public String elseStatment(Pair<String, String> pm){
+        String newInst = "";
+        newInst += "else <n>";
 
-        return "";
+        return newInst;
     }
 
     public String returnVar(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "ret\n";
+
+        return newInst;
     }
 
     public String objMet(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "call " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String objMetVar(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
+        String newInst = "";
+        for(int i = 3; i < matches.size(); i++){
+            newInst += "load " + matches.get(i) + "\n";
+        }
+
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "call " + matches.get(2) + "\n";
+
+        return newInst;
     }
 
     public String varProEqVar(Pair<String, String> pm){
+        String pattern = pm.getFirstValue();
+        String line = pm.getSecondValue();
+        List<String> matches = getMatcherGroup(pattern, line);
 
-        return "";
-    }
+        String newInst = "";
+        newInst += "load " + matches.get(3) + "\n";
+        newInst += "load " + matches.get(1) + "\n";
+        newInst += "set " + matches.get(2) + "\n";
 
-    public String newObj(Pair<String, String> pm){
-
-        return "";
+        return newInst;
     }
 
     public List<String> getMatcherGroup(String pattern, String line){

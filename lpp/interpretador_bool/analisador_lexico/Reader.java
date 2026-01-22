@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PreProcessor{
+public class Reader{
     private final List<String> lines;
     private final List<String> linePreProcessed;
 
-    public PreProcessor(){
+    public Reader(){
         lines = new LinkedList<>();
         linePreProcessed = new LinkedList<>();
     }
