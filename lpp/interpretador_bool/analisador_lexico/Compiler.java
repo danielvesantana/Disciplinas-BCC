@@ -45,7 +45,9 @@ public class Compiler {
     public void processRules(){
         for(String line : lines){
             for(Rule rule : rules){
-
+                if(line.matches(rule.getPattern())){
+                    rule.apply();
+                }
             }
         }
     }

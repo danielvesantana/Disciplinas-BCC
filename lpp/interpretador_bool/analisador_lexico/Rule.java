@@ -11,4 +11,8 @@ public class Rule {
         this.pattern = pattern;
         this.translator = translator;
     }
+
+    public String getPattern(){
+        return pattern;
+    }
 }
