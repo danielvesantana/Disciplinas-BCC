@@ -321,12 +321,14 @@ public class RuleMethod{
     public List<String> getMatcherGroup(String pattern, String line){
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(line);
-        List<String> matches = new ArrayList<>();
+        List<String> matcher = new ArrayList<>();
 
-        while(m.find()){
-            matches.add(m.group());
+        if(m.matches()){
+            for(int i = 0; i <= m.groupCount(); i++){
+                matcher.add(m.group(i));
+            }
         }
 
-        return matches;
+        return matcher;
     }
 }
