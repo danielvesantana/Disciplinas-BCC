@@ -96,20 +96,20 @@ public class RuleMethod{
         newInst += "load " + matches.get(4) + "\n";
 
         switch (matches.get(3)) {
-            case "+":
-                newInst += "add" + "\n";
-                break;
-            case "-":
-                newInst += "sub" + "\n";
-                break;
-            case "*":
-                newInst += "mul" + "\n";
-                break;
-            case "/":
-                newInst += "div" + "\n";
-                break;
-            default:
-                break;
+            case "+" -> newInst += """
+                                   add
+                                   """;
+            case "-" -> newInst += """
+                                   sub
+                                   """;
+            case "*" -> newInst += """
+                                   mul
+                                   """;
+            case "/" -> newInst += """
+                                   div
+                                   """;
+            default -> {
+            }
         }
         newInst += "store " + matches.get(1) + "\n";
 
@@ -210,20 +210,20 @@ public class RuleMethod{
         newInst += "load " + matches.get(5) + "\n";
 
         switch (matches.get(4)) {
-            case "+":
-                newInst += "add" + "\n";
-                break;
-            case "-":
-                newInst += "sub" + "\n";
-                break;
-            case "*":
-                newInst += "mul" + "\n";
-                break;
-            case "/":
-                newInst += "div" + "\n";
-                break;
-            default:
-                break;
+            case "+" -> newInst += """
+                                   add
+                                   """;
+            case "-" -> newInst += """
+                                   sub
+                                   """;
+            case "*" -> newInst += """
+                                   mul
+                                   """;
+            case "/" -> newInst += """
+                                   div
+                                   """;
+            default -> {
+            }
         }
 
         newInst += "load " + matches.get(1) + "\n";
@@ -242,28 +242,18 @@ public class RuleMethod{
         newInst += "load " + matches.get(3) + "\n";
         
         switch(matches.get(2)){
-            case "eq":
-                newInst += "eq";
-                break;
-            case "ne":
-                newInst += "ne";
-                break;
-            case "gt":
-                newInst += "gt";
-                break;
-            case "ge":
-                newInst += "ge";
-                break;
-            case "lt":
-                newInst += "lt";
-                break;
-            case "le":
-                newInst += "le";
-                break;
-            default:
-                break;
+            case "eq" -> newInst += "eq";
+            case "ne" -> newInst += "ne";
+            case "gt" -> newInst += "gt";
+            case "ge" -> newInst += "ge";
+            case "lt" -> newInst += "lt";
+            case "le" -> newInst += "le";
+            default -> {
+            }
         }
-        newInst += "if <n>" + "\n";
+        newInst += """
+                   if <n>
+                   """;
 
         return newInst;
     }

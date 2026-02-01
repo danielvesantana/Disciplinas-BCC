@@ -1,5 +1,6 @@
 package analisador_lexico;
 
+import generics.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Compiler {
         for(String line : lines){
             for(Rule rule : rules){
                 if(line.matches(rule.getPattern())){
-                    rule.apply();
+                    System.out.printf(rule.getTranslator().apply(new Pair<>(rule.getPattern(), line)));
                 }
             }
         }
