@@ -62,10 +62,11 @@ public class RuleMethod{
         String pattern = pm.getFirstValue();
         String line = pm.getSecondValue();
         List<String> matches = getMatcherGroup(pattern, line);
-
+        List<String> args = getArgs(matches.get(4));
+        
         String newInst = "";
-        for(int i = 4; i < matches.size(); i++){
-            newInst += "load " + matches.get(i) + "\n";
+        for(int i = 0; i < args.size(); i++){
+            newInst += "load " + args.get(i) + "\n";
         }
         newInst += "load " + matches.get(2) + "\n";
         newInst += "call " + matches.get(3) + "\n";
@@ -174,10 +175,11 @@ public class RuleMethod{
         String pattern = pm.getFirstValue();
         String line = pm.getSecondValue();
         List<String> matches = getMatcherGroup(pattern, line);
-
+        List<String> args = getArgs(matches.get(4));
+        
         String newInst = "";
-        for(int i = 5; i < matches.size(); i++){
-            newInst += "load " + matches.get(i) + "\n";
+        for(int i = 0; i < args.size(); i++){
+            newInst += "load " + args.get(i) + "\n";
         }
         newInst += "load " + matches.get(3) + "\n";
         newInst += "call " + matches.get(4) + "\n";
@@ -293,10 +295,11 @@ public class RuleMethod{
         String pattern = pm.getFirstValue();
         String line = pm.getSecondValue();
         List<String> matches = getMatcherGroup(pattern, line);
-
+        List<String> args = getArgs(matches.get(3));
+        
         String newInst = "";
-        for(int i = 3; i < matches.size(); i++){
-            newInst += "load " + matches.get(i) + "\n";
+        for(int i = 0; i < args.size(); i++){
+            newInst += "load " + args.get(i) + "\n";
         }
 
         newInst += "load " + matches.get(1) + "\n";
@@ -316,6 +319,18 @@ public class RuleMethod{
         newInst += "set " + matches.get(2) + "\n";
 
         return newInst;
+    }
+
+    public List<String> getArgs(String parameters){
+        Pattern p = Pattern.compile("([a-zA-Z]+)");
+        Matcher m = p.matcher(parameters);
+        List<String> args = new ArrayList<>();
+
+        while(m.find()){
+            args.add(m.group());
+        }
+
+        return args;
     }
 
     public List<String> getMatcherGroup(String pattern, String line){
