@@ -244,12 +244,12 @@ public class RuleMethod{
         newInst += "load " + matches.get(3) + "\n";
         
         switch(matches.get(2)){
-            case "eq" -> newInst += "eq";
-            case "ne" -> newInst += "ne";
-            case "gt" -> newInst += "gt";
-            case "ge" -> newInst += "ge";
-            case "lt" -> newInst += "lt";
-            case "le" -> newInst += "le";
+            case "eq" -> newInst += "eq\n";
+            case "ne" -> newInst += "ne\n";
+            case "gt" -> newInst += "gt\n";
+            case "ge" -> newInst += "ge\n";
+            case "lt" -> newInst += "lt\n";
+            case "le" -> newInst += "le\n";
             default -> {
             }
         }
@@ -262,7 +262,7 @@ public class RuleMethod{
 
     public String elseStatment(Pair<String, String> pm){
         String newInst = "";
-        newInst += "else <n>";
+        newInst += "else <n>\n";
 
         return newInst;
     }

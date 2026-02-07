@@ -6,25 +6,30 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Compiler {
     private final List<String> lines;
     private final List<Rule> rules;
-    private String codePreProcessed;
     private final RuleMethod rm;
     private final String filename;
+    private String codePreProcessed;
 
     public Compiler(List<String> lines){
         this.lines = lines;
         this.codePreProcessed = "";
         this.filename = "pre_processed.bool";
-        rules = new ArrayList<>();
-        rm = new RuleMethod();
+        this.rules = new ArrayList<>();
+        this.rm = new RuleMethod();
     }
     
     public void start() throws IOException{
         createRules();
         processRules();
+        calculateIfDistance();
+        calculateElseDistance();
         writeFile();
     }
     
@@ -65,6 +70,73 @@ public class Compiler {
                 codePreProcessed += line + "\n";
         }
         codePreProcessed = codePreProcessed.trim();
+    }
+
+    public void calculateIfDistance(){
+        Scanner scanner = new Scanner(codePreProcessed);
+        Pattern p = Pattern.compile("if <n>");
+        Matcher m;
+        String newcodePreProcessed = "";
+
+        while(scanner.hasNextLine()){
+            boolean flag = false;
+            String line = scanner.nextLine();
+            m = p.matcher(line);
+
+            if(m.matches()){
+                flag = true;
+                String ifLine = "";
+                String ifScope = "";
+                int count = 0;
+                while(!line.equals("else <n>") && !line.equals("end-if")){
+                    line = scanner.nextLine();
+                    count++;
+                    ifScope += line + "\n";
+                }
+
+                ifLine = "if " + (count-1) + "\n";
+                newcodePreProcessed += ifLine + ifScope;
+            }
+            if(!flag){
+                newcodePreProcessed += line + "\n";
+            }
+        }
+
+        codePreProcessed = newcodePreProcessed;
+    }
+
+    public void calculateElseDistance(){
+        Scanner scanner = new Scanner(codePreProcessed);
+        Pattern p = Pattern.compile("else <n>");
+        Matcher m;
+
+        String newcodePreProcessed = "";
+
+        while(scanner.hasNextLine()){
+            boolean flag = false;
+            String line = scanner.nextLine();
+            m = p.matcher(line);
+
+            if(m.matches()){
+                flag = true;
+                String elseLine = "";
+                String elseScope = "";
+                int count = 0;
+                while(!line.equals("end-if")){
+                    line = scanner.nextLine();
+                    count++;
+                    elseScope += line + "\n";
+                }
+
+                elseLine = "else " + (count-1) + "\n";
+                newcodePreProcessed += elseLine + elseScope;
+            }
+            if(!flag){
+                newcodePreProcessed += line + "\n";
+            }
+        }
+
+        codePreProcessed = newcodePreProcessed;
     }
 
     public void writeFile() throws IOException{
