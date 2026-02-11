@@ -136,7 +136,7 @@ public class Compiler {
             }
         }
 
-        codePreProcessed = newcodePreProcessed;
+        codePreProcessed = newcodePreProcessed.trim();
     }
 
     public void writeFile() throws IOException{

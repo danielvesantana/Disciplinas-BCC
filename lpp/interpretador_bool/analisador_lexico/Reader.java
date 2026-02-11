@@ -40,6 +40,4 @@ public class Reader{
 
         return linePreProcessed;
     }
-
-    
 }
