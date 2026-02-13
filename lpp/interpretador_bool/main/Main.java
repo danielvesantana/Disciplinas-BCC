@@ -1,9 +1,9 @@
 package main;
 
-import analisador_lexico.Compiler;
-import analisador_lexico.Reader;
+import intermediate_code.Translation;
 import java.io.IOException;
 import java.util.List;
+import reader.Reader;
 
 public class Main {
     public static void main(String[] args) throws IOException{
@@ -12,7 +12,7 @@ public class Main {
         
         reader.read_file(path);
         List<String> lines = reader.removeWhiteSpaces();
-        Compiler compiler = new Compiler(lines);
+        Translation compiler = new Translation(lines);
         compiler.start();
         
     }

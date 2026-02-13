@@ -1,4 +1,4 @@
-package analisador_lexico;
+package intermediate_code;
 
 import generics.Pair;
 import java.io.FileWriter;
@@ -10,14 +10,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Compiler {
+public class Translation {
     private final List<String> lines;
     private final List<Rule> rules;
     private final RuleMethod rm;
     private final String filename;
     private String codePreProcessed;
 
-    public Compiler(List<String> lines){
+    public Translation(List<String> lines){
         this.lines = lines;
         this.codePreProcessed = "";
         this.filename = "pre_processed.bool";

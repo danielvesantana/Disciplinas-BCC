@@ -1,4 +1,4 @@
-package analisador_lexico;
+package intermediate_code;
 import generics.Pair;
 import java.util.ArrayList;
 import java.util.List;
