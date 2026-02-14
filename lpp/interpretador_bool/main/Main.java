@@ -1,8 +1,7 @@
 package main;
 
-import intermediate_code.Translation;
 import java.io.IOException;
-import java.util.List;
+import java.util.Stack;
 import reader.Reader;
 
 public class Main {
@@ -11,9 +10,16 @@ public class Main {
         String path = "/home/daniel-alves/gitiznho/Disciplinas-BCC/lpp/interpretador_bool/codigo.bool";
         
         reader.read_file(path);
-        List<String> lines = reader.removeWhiteSpaces();
-        Translation compiler = new Translation(lines);
-        compiler.start();
+        reader.removeWhiteSpaces();
+        Stack<String> lexemes = reader.getLexemes();
+
+        while(!lexemes.empty()){
+            System.out.println(lexemes.pop());
+        }
+
+        // List<String> lines = reader.getLines();
+        // Translation compiler = new Translation(lines);
+        //compiler.start();
         
     }
 }
