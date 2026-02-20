@@ -1,7 +1,7 @@
 package main;
 
 import java.io.IOException;
-import java.util.Stack;
+import java.util.List;
 import reader.Reader;
 
 public class Main {
@@ -11,11 +11,9 @@ public class Main {
         
         reader.read_file(path);
         reader.removeWhiteSpaces();
-        Stack<String> lexemes = reader.getLexemes();
-
-        while(!lexemes.empty()){
-            System.out.println(lexemes.pop());
-        }
+        List<String> lexemes = reader.getLexemes();
+        Lexer lexer = new Lexer(lexemes);
+        lexer.tokenize();
 
         // List<String> lines = reader.getLines();
         // Translation compiler = new Translation(lines);

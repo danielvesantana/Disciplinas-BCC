@@ -5,20 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class Reader{
     private final List<String> lines;
     private final List<String> linePreProcessed;
-    private final Stack<String> lexemes;
+    private final List<String> lexemes;
 
     public Reader(){
         lines = new LinkedList<>();
         linePreProcessed = new LinkedList<>();
-        lexemes = new Stack<>();
+        lexemes = new LinkedList<>();
     }
 
     public void read_file(String path){
@@ -52,11 +50,10 @@ public class Reader{
         return linePreProcessed;
     }
 
-    public Stack<String> getLexemes(){
+    public List<String> getLexemes(){
         for(String line : linePreProcessed){
             String[] lex = line.split(" ");
 
-            Collections.reverse(Arrays.asList(lex));
             lexemes.addAll(Arrays.asList(lex));
         }
 

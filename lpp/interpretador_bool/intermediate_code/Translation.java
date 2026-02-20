@@ -73,70 +73,76 @@ public class Translation {
     }
 
     public void calculateIfDistance(){
-        Scanner scanner = new Scanner(codePreProcessed);
-        Pattern p = Pattern.compile("if <n>");
-        Matcher m;
-        String newcodePreProcessed = "";
+        try (Scanner scanner = new Scanner(codePreProcessed)) {
+            Pattern p = Pattern.compile("if <n>");
+            Matcher m;
+            String newcodePreProcessed = "";
 
-        while(scanner.hasNextLine()){
-            boolean flag = false;
-            String line = scanner.nextLine();
-            m = p.matcher(line);
+            while(scanner.hasNextLine()){
+                boolean flag = false;
+                String line = scanner.nextLine();
+                m = p.matcher(line);
 
-            if(m.matches()){
-                flag = true;
-                String ifLine = "";
-                String ifScope = "";
-                int count = 0;
-                while(!line.equals("else <n>") && !line.equals("end-if")){
-                    line = scanner.nextLine();
-                    count++;
-                    ifScope += line + "\n";
+                if(m.matches()){
+                    flag = true;
+                    String ifLine = "";
+                    String ifScope = "";
+                    int count = 0;
+                    while(!line.equals("else <n>") && !line.equals("end-if")){
+                        line = scanner.nextLine();
+                        count++;
+                        ifScope += line + "\n";
+                    }
+
+                    ifLine = "if " + (count-1) + "\n";
+                    newcodePreProcessed += ifLine + ifScope;
                 }
+                if(!flag){
+                    newcodePreProcessed += line + "\n";
+                }
+            }
 
-                ifLine = "if " + (count-1) + "\n";
-                newcodePreProcessed += ifLine + ifScope;
-            }
-            if(!flag){
-                newcodePreProcessed += line + "\n";
-            }
+            codePreProcessed = newcodePreProcessed;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
-
-        codePreProcessed = newcodePreProcessed;
     }
 
     public void calculateElseDistance(){
-        Scanner scanner = new Scanner(codePreProcessed);
-        Pattern p = Pattern.compile("else <n>");
-        Matcher m;
+        try (Scanner scanner = new Scanner(codePreProcessed)) {
+            Pattern p = Pattern.compile("else <n>");
+            Matcher m;
 
-        String newcodePreProcessed = "";
+            String newcodePreProcessed = "";
 
-        while(scanner.hasNextLine()){
-            boolean flag = false;
-            String line = scanner.nextLine();
-            m = p.matcher(line);
+            while(scanner.hasNextLine()){
+                boolean flag = false;
+                String line = scanner.nextLine();
+                m = p.matcher(line);
 
-            if(m.matches()){
-                flag = true;
-                String elseLine = "";
-                String elseScope = "";
-                int count = 0;
-                while(!line.equals("end-if")){
-                    line = scanner.nextLine();
-                    count++;
-                    elseScope += line + "\n";
+                if(m.matches()){
+                    flag = true;
+                    String elseLine = "";
+                    String elseScope = "";
+                    int count = 0;
+                    while(!line.equals("end-if")){
+                        line = scanner.nextLine();
+                        count++;
+                        elseScope += line + "\n";
+                    }
+
+                    elseLine = "else " + (count-1) + "\n";
+                    newcodePreProcessed += elseLine + elseScope;
                 }
+                if(!flag){
+                    newcodePreProcessed += line + "\n";
+                }
+            }
 
-                elseLine = "else " + (count-1) + "\n";
-                newcodePreProcessed += elseLine + elseScope;
-            }
-            if(!flag){
-                newcodePreProcessed += line + "\n";
-            }
+            codePreProcessed = newcodePreProcessed.trim();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
-
-        codePreProcessed = newcodePreProcessed.trim();
     }
 
     public void writeFile() throws IOException{
