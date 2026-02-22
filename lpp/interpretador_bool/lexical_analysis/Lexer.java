@@ -37,11 +37,13 @@ public class Lexer {
         Pattern p3 = Pattern.compile("[a-zA-Z]+()");
         Pattern p4 = Pattern.compile("[a-zA-Z]+._prototype");
         Pattern p5 = Pattern.compile("[a-zA-Z]+.[a-zA-Z]+");
+        Pattern p6 = Pattern.compile("[a-zA-Z]+.[a-zA-Z]+()");
         Matcher m1 = p1.matcher(lexeme);
         Matcher m2 = p2.matcher(lexeme);
         Matcher m3 = p3.matcher(lexeme);
         Matcher m4 = p4.matcher(lexeme);
         Matcher m5 = p5.matcher(lexeme);
+        Matcher m6 = p6.matcher(lexeme);
         Token token;
         if(lexeme.equals("class")){
             token = Token.CLASS;
@@ -112,20 +114,37 @@ public class Lexer {
             tokens.add(token);
             tokens.add(token1);
         }else if (m3.matches()) {
+            Token token1 = Token.LPAREN;
+            Token token2 = Token.RPAREN;
             token = Token.METHOD_NAME;
             tokens.add(token);
+            tokens.add(token1);
+            tokens.add(token2);
         }else if (m4.matches()){
-            Token token1 = Token.PROTOTYPE;
+            Token token1 = Token.DOT;
+            Token token2 = Token.PROTOTYPE;
             token = Token.NAME;
             tokens.add(token);
             tokens.add(token1);
+            tokens.add(token2);
         }else if (m5.matches()) {
             Token token1 = Token.NAME;
-            Token token2 = Token.COMMA;
-            token = token.NAME;
+            Token token2 = Token.DOT;
+            token = Token.NAME;
             tokens.add(token1);
             tokens.add(token2);
             tokens.add(token);
+        }else if (m6.matches()) {
+            Token token1 = Token.NAME;
+            Token token2 = Token.DOT;
+            Token token3 = Token.LPAREN;
+            Token token4 = Token.RPAREN;
+            token = Token.NAME;
+            tokens.add(token1);
+            tokens.add(token2);
+            tokens.add(token);
+            tokens.add(token3);
+            tokens.add(token4);
         }else{
             System.out.println(lexeme + " não é um identificador válido");
         }
