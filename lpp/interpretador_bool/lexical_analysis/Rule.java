@@ -2,13 +2,12 @@ package lexical_analysis;
 
 import java.util.List;
 import java.util.function.Function;
-import generics.Pair;
 
 public class Rule {
-    private final Function<Pair<String, String>, List<Token>> createToken;
+    private final Function<String, List<Token>> createToken;
     private final String pattern;
 
-    public Rule(String pattern, Function<Pair<String, String>> createToken){
+    public Rule(String pattern, Function<String, List<Token>> createToken){
         this.pattern = pattern;
         this.createToken = createToken;
     }
@@ -17,7 +16,7 @@ public class Rule {
         return pattern;
     }
 
-    public Function<Pair<String, String>> getToken(){
-        return token;
+    public Function<String, List<Token>> getToken(){
+        return createToken;
     }
 }
