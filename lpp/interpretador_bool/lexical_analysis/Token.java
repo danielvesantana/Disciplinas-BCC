@@ -33,5 +33,5 @@ public enum Token {
     OP_SUBTRACTION,
     OP_MULTIPLICATION,
     OP_DIVISION,
-    NUMBER,
+    NUMBER;
 }

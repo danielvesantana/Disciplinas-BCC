@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import intermediate_code.Rule;
-
 public class Lexer {
     private final List<String> lexemes;
     private final List<Token> tokens;
@@ -38,51 +36,33 @@ public class Lexer {
     }
 
     public void isIdentifier(String lexeme){
-        if (lexeme.equals("class")) {
-            tokens.add(Token.CLASS);
-        }else if (lexeme.equals("method")) {
-            tokens.add(Token.METHOD);
-        }else if (lexeme.equals("begin")) {
-            tokens.add(Token.BEGIN);
-        }else if (lexeme.equals("self")) {
-            tokens.add(Token.SELF);
-        }else if (lexeme.equals("vars")) {
-            tokens.add(Token.VARS);
-        }else if (lexeme.equals("end")) {
-            tokens.add(Token.END);
-        }else if (lexeme.equals("if")) {
-            tokens.add(Token.IF);
-        }else if (lexeme.equals("else")) {
-            tokens.add(Token.ELSE);
-        }else if (lexeme.equals("return")) {
-            tokens.add(Token.RETURN);
-        }else if (lexeme.equals("eq")) {
-            tokens.add(Token.EQ);
-        }else if (lexeme.equals("ne")) {
-            tokens.add(Token.NE);
-        }else if (lexeme.equals("lt")) {
-            tokens.add(Token.LT);
-        }else if (lexeme.equals("le")) {
-            tokens.add(Token.LE);
-        }else if (lexeme.equals("gt")) {
-            tokens.add(Token.GT);
-        }else if (lexeme.equals("ge")) {
-            tokens.add(Token.GE);
-        }else if (lexeme.equals("new")) {
-            tokens.add(Token.NEW);
-        }else if (lexeme.equals("main")) {
-            tokens.add(Token.MAIN);
-        }else if (lexeme.equals("io")) {
-            tokens.add(Token.IO);
-        }else if (lexeme.equals("end-method")) {
-            tokens.add(Token.END_METHOD);
-        }else if (lexeme.equals("end-class")) {
-            tokens.add(Token.END_CLASS);
-        }
-
-        for(Rule rule : rules){
-            if(lexeme.matches(rule.getPattern())){
-                tokens.addAll(rule.getToken().apply(lexeme));
+        switch (lexeme) {
+            case "class" -> tokens.add(Token.CLASS);
+            case "method" -> tokens.add(Token.METHOD);
+            case "begin" -> tokens.add(Token.BEGIN);
+            case "self" -> tokens.add(Token.SELF);
+            case "vars" -> tokens.add(Token.VARS);
+            case "end" -> tokens.add(Token.END);
+            case "if" -> tokens.add(Token.IF);
+            case "else" -> tokens.add(Token.ELSE);
+            case "return" -> tokens.add(Token.RETURN);
+            case "eq" -> tokens.add(Token.EQ);
+            case "ne" -> tokens.add(Token.NE);
+            case "lt" -> tokens.add(Token.LT);
+            case "le" -> tokens.add(Token.LE);
+            case "gt" -> tokens.add(Token.GT);
+            case "ge" -> tokens.add(Token.GE);
+            case "new" -> tokens.add(Token.NEW);
+            case "main" -> tokens.add(Token.MAIN);
+            case "io" -> tokens.add(Token.IO);
+            case "end-method" -> tokens.add(Token.END_METHOD);
+            case "end-class" -> tokens.add(Token.END_CLASS);
+            default -> {
+                for(Rule rule : rules){
+                    if(lexeme.matches(rule.getPattern())){
+                        tokens.addAll(rule.getToken().apply(lexeme));
+                    }
+                }
             }
         }
     }
@@ -112,15 +92,15 @@ public class Lexer {
     public void createRules(){
         rules.add(new Rule("[a-zA-Z]+", lr::nameToken));
         rules.add(new Rule("[a-zA-Z]+,", lr::nameCommaToken));
-        rules.add(new Rule("[a-zA-Z]+()", lr::methodNameToken));
-        rules.add(new Rule("[a-zA-Z]+._prototype", lr::namePrototypeToken));
-        rules.add(new Rule("[a-zA-Z]+.[a-zA-Z]+", lr::nameNameToken));
-        rules.add(new Rule("[a-zA-Z]+.[a-zA-Z]+()", lr::nameMethodNameToken));
+        rules.add(new Rule("[a-zA-Z]+\\(\\)", lr::methodNameToken));
+        rules.add(new Rule("[a-zA-Z]+\\._prototype", lr::namePrototypeToken));
+        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+", lr::nameNameToken));
+        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+\\(\\)", lr::nameMethodNameToken));
         rules.add(new Rule("([a-zA-Z]+)\\(([^)]*)\\)", lr::methodNameAtrToken));
         rules.add(new Rule("([a-zA-Z]+)\\.([a-zA-Z]+)\\(([^)]*)\\)", lr::nameMethodNameAtr));
     }
 
-    public void tokenize(){
+    public List<Token> tokenize(){
         createRules();
 
         char c;
@@ -128,14 +108,18 @@ public class Lexer {
             c = lexeme.charAt(0);
 
             if(isLetter(c)){
+                System.out.println("identificador: " + lexeme);
                 isIdentifier(lexeme);
             }else if(isDigit(c)){
+                System.out.println("numero: " + lexeme);
                 isNumber(lexeme);
             }else if(isSymbol(c)){
+                System.out.println("simbolo: " + lexeme);
                 isOperation(lexeme);
             }else{
                 System.out.println(lexeme + " não é um identificador válido");
             }
         }
+        return tokens;
     }
 }

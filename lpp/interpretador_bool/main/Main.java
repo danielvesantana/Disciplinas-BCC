@@ -2,6 +2,8 @@ package main;
 
 import java.io.IOException;
 import java.util.List;
+import lexical_analysis.Lexer;
+import lexical_analysis.Token;
 import reader.Reader;
 
 public class Main {
@@ -13,8 +15,10 @@ public class Main {
         reader.removeWhiteSpaces();
         List<String> lexemes = reader.getLexemes();
         Lexer lexer = new Lexer(lexemes);
-        lexer.tokenize();
+        List<Token> tokens = lexer.tokenize();
 
+        // tokens.stream()
+        //       .forEach(token -> System.out.println(token));
         // List<String> lines = reader.getLines();
         // Translation compiler = new Translation(lines);
         //compiler.start();
