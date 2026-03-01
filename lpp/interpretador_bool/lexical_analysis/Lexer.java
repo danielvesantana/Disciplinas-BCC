@@ -1,5 +1,8 @@
 package lexical_analysis;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -61,6 +64,7 @@ public class Lexer {
                 for(Rule rule : rules){
                     if(lexeme.matches(rule.getPattern())){
                         tokens.addAll(rule.getToken().apply(lexeme));
+                        return;
                     }
                 }
             }
@@ -89,37 +93,48 @@ public class Lexer {
             }
     }
 
-    public void createRules(){
-        rules.add(new Rule("[a-zA-Z]+", lr::nameToken));
-        rules.add(new Rule("[a-zA-Z]+,", lr::nameCommaToken));
-        rules.add(new Rule("[a-zA-Z]+\\(\\)", lr::methodNameToken));
-        rules.add(new Rule("[a-zA-Z]+\\._prototype", lr::namePrototypeToken));
-        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+", lr::nameNameToken));
-        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+\\(\\)", lr::nameMethodNameToken));
-        rules.add(new Rule("([a-zA-Z]+)\\(([^)]*)\\)", lr::methodNameAtrToken));
-        rules.add(new Rule("([a-zA-Z]+)\\.([a-zA-Z]+)\\(([^)]*)\\)", lr::nameMethodNameAtr));
+    public void createTokenRules(){
+        rules.add(new Rule("[a-zA-Z]+$", lr::nameToken));
+        rules.add(new Rule("[a-zA-Z]+,$", lr::nameCommaToken));
+        rules.add(new Rule("[a-zA-Z]+\\(\\)$", lr::methodNameToken));
+        rules.add(new Rule("[a-zA-Z]+\\._prototype$", lr::namePrototypeToken));
+        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+$", lr::nameNameToken));
+        rules.add(new Rule("[a-zA-Z]+\\.[a-zA-Z]+\\(\\)$", lr::nameMethodNameToken));
+        rules.add(new Rule("([a-zA-Z]+)\\(([^)]*)\\)$", lr::methodNameAtrToken));
+        rules.add(new Rule("([a-zA-Z]+)\\.([a-zA-Z]+)\\(([^)]*)\\)$", lr::nameMethodNameAtr));
     }
 
-    public List<Token> tokenize(){
-        createRules();
-
+    public void tokenize(){
         char c;
         for(String lexeme : lexemes){
             c = lexeme.charAt(0);
 
             if(isLetter(c)){
-                System.out.println("identificador: " + lexeme);
                 isIdentifier(lexeme);
             }else if(isDigit(c)){
-                System.out.println("numero: " + lexeme);
                 isNumber(lexeme);
             }else if(isSymbol(c)){
-                System.out.println("simbolo: " + lexeme);
                 isOperation(lexeme);
             }else{
                 System.out.println(lexeme + " não é um identificador válido");
             }
         }
-        return tokens;
+    }
+
+    public void writeTokensFile(){
+        try(FileWriter writer = new FileWriter("lexical_analysis/tokens.bool")){
+            tokens.stream()
+                .forEach(token -> {
+                    try {
+                        writer.write(token + "\n");
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
+        }catch(FileNotFoundException e) {
+            System.out.println("File not founded");
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
