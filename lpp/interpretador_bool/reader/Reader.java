@@ -50,7 +50,7 @@ public class Reader{
         return linePreProcessed;
     }
 
-    public List<String> getLexemes(){
+    public List<String> getStrings(){
         for(String line : linePreProcessed){
             String[] lex = line.split(" ");
 
