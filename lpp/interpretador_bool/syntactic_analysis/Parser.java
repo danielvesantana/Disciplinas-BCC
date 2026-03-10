@@ -1,16 +1,12 @@
 package syntactic_analysis;
 
 import java.util.List;
+import lexical_analysis.Token;
 
 public class Parser {
-    private final List<String> tokens;
+    private final List<Token> tokens;
 
-    public Parser(List<String> tokens){
+    public Parser(List<Token> tokens){
         this.tokens = tokens;
-    }
-
-    public void Parsing(){
-        tokens.stream()
-            .forEach(token -> System.out.println(token));
     }
 }

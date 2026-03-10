@@ -104,7 +104,7 @@ public class Lexer {
         rules.add(new Rule("([a-zA-Z]+)\\.([a-zA-Z]+)\\(([^)]*)\\)$", lr::nameMethodNameAtr));
     }
 
-    public void tokenize(){
+    public List<Token> tokenize(){
         char c;
         for(String lexeme : lexemes){
             c = lexeme.charAt(0);
@@ -119,6 +119,8 @@ public class Lexer {
                 System.out.println(lexeme + " não é um identificador válido");
             }
         }
+
+        return tokens;
     }
 
     public void writeTokensFile(){

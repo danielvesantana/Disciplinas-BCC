@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.List;
 import lexical_analysis.Lexer;
+import lexical_analysis.Token;
 import reader.Reader;
 import syntactic_analysis.Parser;
 
@@ -17,10 +18,9 @@ public class Main {
         List<String> lexemes = reader.getStrings();
         Lexer lexer = new Lexer(lexemes);
         lexer.createTokenRules();
-        lexer.tokenize();
+        List<Token> tokens = lexer.tokenize();
         lexer.writeTokensFile();
         reader.read_file(tokens_code_path);
-        List<String> tokens = reader.getStrings();
         Parser parser = new Parser(tokens);
 
         // tokens.stream()
