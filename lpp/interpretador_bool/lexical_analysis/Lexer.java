@@ -3,6 +3,7 @@ package lexical_analysis;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,7 +17,7 @@ public class Lexer {
 
     public Lexer(List<String> lexemes){
         this.lexemes = lexemes;
-        this.tokens = new LinkedList<>();
+        this.tokens = new ArrayList<>();
         this.rules = new LinkedList<>();
         this.lr = new LexerRules();
     }
