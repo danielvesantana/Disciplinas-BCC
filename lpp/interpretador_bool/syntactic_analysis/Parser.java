@@ -27,7 +27,6 @@ public class Parser {
             case VARS -> bnfRules.varsBNF(tokens, index);
             case IF -> bnfRules.ifBNF(tokens, index);
             case ELSE -> bnfRules.elseBNF(tokens, index);
-            case RETURN -> bnfRules.returnBNF(tokens, index);
             case NEW -> bnfRules.newBNF(tokens, index);
             case MAIN -> bnfRules.mainBNF(tokens, index);
             case IO -> bnfRules.ioBNF(tokens, index);

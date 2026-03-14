@@ -9,6 +9,8 @@ public enum Token {
     END,
     IF,
     ELSE,
+    THEN,
+    END_IF,
     RETURN,
     EQ,
     NE,

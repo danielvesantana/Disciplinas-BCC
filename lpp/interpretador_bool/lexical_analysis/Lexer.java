@@ -49,6 +49,8 @@ public class Lexer {
             case "end" -> tokens.add(Token.END);
             case "if" -> tokens.add(Token.IF);
             case "else" -> tokens.add(Token.ELSE);
+            case "then" -> tokens.add(Token.THEN);
+            case "end_if"-> tokens.add(Token.END_IF);
             case "return" -> tokens.add(Token.RETURN);
             case "eq" -> tokens.add(Token.EQ);
             case "ne" -> tokens.add(Token.NE);

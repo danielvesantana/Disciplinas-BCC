@@ -21,28 +21,37 @@ public class BNFRules {
         List<Token> bnfList = new LinkedList<>();
         bnfList.add(tokens.get(index));
         
-        for(int i = index; i < tokens.size(); i++){
-            if(tokens.get(i) == Token.NAME && 
-               tokens.get(i+1) == Token.COMMA && 
-               tokens.get(i+2) == Token.NAME){
-                bnfList.add(tokens.get(i));
-                bnfList.add(tokens.get(i+1));
-                bnfList.add(tokens.get(i+2));
-            }else if(tokens.get(i) == Token.NAME){
-                bnfList.add(tokens.get(i));
-            }
+        int i = index;
+        if(tokens.get(i) == Token.NAME && 
+            tokens.get(i+1) == Token.COMMA && 
+            tokens.get(i+2) == Token.NAME){
+            bnfList.add(tokens.get(i));
+            bnfList.add(tokens.get(i+1));
+            bnfList.add(tokens.get(i+2));
+        }else if(tokens.get(i) == Token.NAME){
+            bnfList.add(tokens.get(i));
         }
 
         return bnfList;
     }
 
     public List<Token> ifBNF(List<Token> tokens, int index) {
+        List<Token> bnfList = new LinkedList<>();
+        bnfList.add(tokens.get(index));
+
+        int i = index;
+        if(tokens.get(i) == Token.IF &&
+            tokens.get(i+1) == Token.NAME &&
+            cmp(tokens.get(i+2)) &&
+            tokens.get(i+3) == Token.NAME &&
+            tokens.get(i+4) == Token.THEN &&
+            ifStmts(tokens.get(i+5)) &&
+            tokens.get(i+6) == Token.END_IF){
+                
+            }
     }
 
     public List<Token> elseBNF(List<Token> tokens, int index) {
-    }
-
-    public List<Token> returnBNF(List<Token> tokens, int index) {
     }
 
     public List<Token> newBNF(List<Token> tokens, int index) {
@@ -73,5 +82,14 @@ public class BNFRules {
     }
 
     public List<Token> methodNameBNF(List<Token> tokens, int index) {
+    }
+
+    public Boolean cmp(Token token){
+        return token == Token.EQ ||
+               token == Token.NE ||
+               token == Token.GT ||
+               token == Token.GE ||
+               token == Token.LT ||
+               token == Token.LE;    
     }
 }
